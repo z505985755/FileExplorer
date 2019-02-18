@@ -1,0 +1,88 @@
+﻿@page
+@model FileExplorerCore.Pages.FileExplorerModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" onmouseup="mouseup(event)" onmousemove="dropFileMove(event);mousemove(event)">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="~/js/errorCatch.js?v=1.0"></script>
+    <script src="~/js/jquery-1.12.1.js"></script>
+    <script src="~/lib/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/lib/jquery-easyui-1.4.5/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/jquery-easyui-1.4.5/themes/icon.css" />
+    <script type="text/javascript" src="~/lib/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/js/kuse.js?v=1.0"></script>
+    <script src="~/js/myFiles.js?v=1.10"></script>
+    <link href="~/css/myFiles.css?v=1.0" rel="stylesheet" />
+    <link href="~/lib/webuploader/webuploader.css" rel="stylesheet" />
+    <script src="~/lib/webuploader/webuploader.js"></script>
+</head>
+<body onmouseup="mouseup(event)" onmousemove="mousemove(event)" ondragstart="return false">
+    <div id="head">
+        <div id="uploader" class="wu-example">
+            <!--用来存放文件信息-->
+            <div class="btns">
+                <div id="picker">上传文件</div>
+            </div>
+        </div>
+    </div>
+    <div id="nav">
+        <span>全部文件</span>
+    </div>
+    <input type="hidden" id="path" />
+    <div id="body" onmousedown="mousedown(event)" onmouseup="if (event.ctrlKey != 1&&!mouseRightIsDown(event)) clearSelect(); ">
+    </div>
+    <div class="onselect" onmousemove="mousemove(event)"></div>
+    <div onmouseup="mouseup(event)" id="dropItem" class="ondrop" onmousemove="dropFileMove(event)">
+        <div id="drop_file_img"></div>
+        <div align="center" id="drop_file_num"><span>10</span></div>
+    </div>
+    <div id="mm1" class="easyui-menu" style="width: 150px;" data-options="hideOnUnhover:false">
+        <div id="mm-open" onclick="doOpenFile(this,event)">打开</div>
+        <div id="mm-download" onclick="downloadFiles()">下载(D)</div>
+        <div class="menu-sep"></div>
+        <div id="mm-cut" onclick="copyFile(this,event,false)">剪切(X)</div>
+        <div id="mm-copy" onclick="copyFile(this,event,true)">复制(C)</div>
+        <div class="menu-sep"></div>
+        <div id="mm-del" onclick="delFiles(this,event)">删除</div>
+        <div id="mm-rename" onclick="dorename(this,event)">重命名</div>
+        <div class="menu-sep"></div>
+        <div id="mm-attr" onclick="showAttr(event)">属性</div>
+    </div>
+    <div id="mm2" class="easyui-menu" style="width: 150px;" data-options="hideOnUnhover:false">
+        <div>
+            <span id="mm-look">查看</span>
+            <div style="width:150px;">
+                <div class="menu_select">缩略图</div>
+                <div>列表</div>
+            </div>
+        </div>
+        <div>
+            <span id="mm-sort">排序方式</span>
+            <div style="width:100px;">
+                <div onclick="changeOrder1(this)" id="order_name" class="menu_select order1">名称</div>
+                <div onclick="changeOrder1(this)" id="order_size" class=" order1">大小</div>
+                <!--<div onclick="changeOrder()" id="order_type">类型</div>-->
+                <div onclick="changeOrder1(this)" id="order_ModifiedDate" class=" order1">修改日期</div>
+                <div onclick="changeOrder1(this)" id="order_CreatDateTime" class=" order1">创建日期</div>
+                <div class="menu-sep"></div>
+                <div onclick="changeOrder2(this)" id="ascending" class="menu_select order2">递增</div>
+                <div onclick="changeOrder2(this)" id="desc" class=" order2">递减</div>
+            </div>
+        </div>
+        <div id="mm-refresh" onclick="refreshFolder()">刷新</div>
+        <div class="menu-sep"></div>
+        <div id="mm-stick" onclick="stick(this,event)">粘贴(V)</div>
+        <div id="mm-clearStick" onclick="copyItems='';stopPropagation(event);">清空剪贴板</div>
+        <div class="menu-sep"></div>
+        <div id="mm-newfolder" onclick="newFolder()">新建文件夹</div>
+        <div class="menu-sep"></div>
+        <div id="mm-attr2" onclick="showAttr(event)">属性</div>
+    </div>
+</body>
+</html>
